@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "build:frontend": "(npm i && cd packages/frontend/ && npm i && npm run build)"
+  },
   "devDependencies": {
     "lerna": "^3.4.3"
   }
