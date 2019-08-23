@@ -148,7 +148,7 @@ function resolveUsername(username, config = {})
 				descr          = await resolver.text(node, 'web3-provider');
 			}
 			// DEBUG !
-			descr = "ipfs://QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw"; // default on IPFS
+			// descr = "ipfs://QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw"; // default on IPFS
 			// descr = "file://lib/modules/__debug.js";
 			// DEBUG !
 			if (descr !== '') { resolve({ addr, descr }); }
@@ -215,7 +215,7 @@ class ENSLogin
 		provider:
 		{
 			appId:   null,
-			network: 'homestead',
+			network: 'goerli',
 			anchor:  null,
 		},
 		ipfs:
@@ -226,19 +226,13 @@ class ENSLogin
 		},
 	}
 
-	// ENSLogin.loadProvider(
-	// 	// "lib/modules/__debug.js", // Single file
-	// 	// "QmWaVdwE3t9tvJp1kBAYtmLrLPqS7hVohGT9UqecxeWVuQ", // Single file
-	// 	// "lib/modules/__debug_multi", // Multiple file
-	// 	// "QmbhRi1dAsSG4yfMcPxRNeejX1a7P3NQqPMGXJt9pxpe6f", // Multiple Files
-	// 	// "lib/modules//default/index.js", // default
-	// 	"QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw", // default
-	// 	config
-	// )
-	// .then(console.log)
-	// .catch(console.error);
-
-	ENSLogin.create("hadriencroubois.eth", config).then(console.log).catch(console.error);
+	// "lib/modules/__debug.js", // Single file
+	// "QmWaVdwE3t9tvJp1kBAYtmLrLPqS7hVohGT9UqecxeWVuQ", // Single file
+	// "lib/modules/__debug_multi", // Multiple file
+	// "QmbhRi1dAsSG4yfMcPxRNeejX1a7P3NQqPMGXJt9pxpe6f", // Multiple Files
+	// "lib/modules//default/index.js", // default
+	// "QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw", // default
+	ENSLogin.create("metamask.eth", config).then(console.log).catch(console.error);
 
 
 
