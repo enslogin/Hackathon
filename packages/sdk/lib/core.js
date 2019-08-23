@@ -89,36 +89,92 @@ function loadJSfromFS(path, config = {})
 /*****************************************************************************
  *                                 ENSLogin                                  *
  *****************************************************************************/
+
+const ENSABI      = JSON.parse(fs.readFileSync("lib/abi/ENS.json")).abi;
+const RESOLVERABI = JSON.parse(fs.readFileSync("lib/abi/Resolver.json")).abi;
+
+class ENSTools
+{
+	static labelhash(label)
+	{
+		return ethers.utils.solidityKeccak256([ "string" ], [ label.toLowerCase() ])
+	}
+
+	static compose(labelHash, rootHash)
+	{
+		return ethers.utils.solidityKeccak256([ "bytes32", "bytes32" ], [ rootHash,  labelHash ]);
+	}
+
+	static namehash(domain)
+	{
+		return domain.split('.').reverse().reduce(
+			(hash, label) => ENSTools.compose(ENSTools.labelhash(label), hash),
+			"0x0000000000000000000000000000000000000000000000000000000000000000"
+		);
+	}
+}
+
+function getResolver(ens, node)
+{
+	return new Promise(async (resolve, reject) => {
+		ens.resolver(node).then(addr => {
+			resolve(new ethers.Contract(addr, RESOLVERABI, ens.provider));
+		})
+		.catch(reject);
+	});
+}
+
+function resolveUsername(username, config = {})
+{
+	return new Promise(async (resolve, reject) => {
+		try
+		{
+			const basicProvider = ethers.getDefaultProvider(config.provider.network);
+			const chain         = await basicProvider.ready
+			const ens           = new ethers.Contract(chain.ensAddress, ENSABI, basicProvider);
+
+			var addr, descr;
+			{
+				const node     = ENSTools.namehash(username);
+				const resolver = await getResolver(ens, node);
+				addr           = await resolver.addr(node);
+				descr            = await resolver.text(node, 'web3-provider');
+			}
+			// DEBUG !
+			descr = "QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw";
+			// DEBUG !
+			if (descr !== '') { resolve({ addr, descr }); }
+
+			{
+				const node     = ENSTools.namehash(username.split('.').splice(1).join('.'));
+				const resolver = await getResolver(ens, node);
+				descr            = await resolver.text(node, 'web3-provider-default');
+			}
+			if (descr !== '') { resolve({ addr, descr }); }
+
+			reject(null);
+		}
+		catch(e)
+		{
+			reject(e);
+		}
+	});
+}
+
+
 class ENSLogin
 {
-	// static create(config = {})
-	// {
-	// 	return new Promise((resolve, reject) => {
-	// 		// const ensprovider = ethers.getDefaultProvider();
-	// 		// console.log(ensprovider)
-	//
-	// 		// const name = "name.provider.eth";
-	// 		// let domain = name.split('.').splice(1).join('.')
-	//
-	// 		// name → nodehash
-	// 		// - find resolver for nodehash
-	// 		// - try getData(nodehash, 'web3-provider')
-	// 		// domain → nodehash
-	// 		// - find resolver for nodehash
-	// 		// - try getData(nodehash, 'default-web3-provider')
-	// 		// else error
-	//
-	// 		loadProvider().then(resolve).catch(reject);
-	// 	});
-	// }
-
-	static loadProvider(descr, config = {})
+	static create(username, config = {})
 	{
-		return new Promise((resolve, reject) => {
-			const [ uri, entrypoint = 'provider'] = descr.split(':');
-			// Select `api` or `standalone` as a way to connect to ipfs
-			loadJSfromIPFS.api(uri, config)
-			.then(() => resolve(eval(entrypoint)(config.provider)))
+		return new Promise(async (resolve, reject) => {
+			resolveUsername(username, config)
+			.then(({ addr, descr }) => {
+				config.user = { addr, username, }
+				const [ uri, entrypoint = 'provider'] = descr.split(':');
+				loadJSfromIPFS.api(uri, config)
+				.then(() => resolve(eval(entrypoint)(config.provider)))
+				.catch(reject);
+			})
 			.catch(reject);
 		});
 	}
@@ -145,18 +201,19 @@ class ENSLogin
 		},
 	}
 
+	// ENSLogin.loadProvider(
+	// 	// "lib/modules/__debug.js", // Single file
+	// 	// "QmWaVdwE3t9tvJp1kBAYtmLrLPqS7hVohGT9UqecxeWVuQ", // Single file
+	// 	// "lib/modules/__debug_multi", // Multiple file
+	// 	// "QmbhRi1dAsSG4yfMcPxRNeejX1a7P3NQqPMGXJt9pxpe6f", // Multiple Files
+	// 	// "lib/modules//default/index.js", // default
+	// 	"QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw", // default
+	// 	config
+	// )
+	// .then(console.log)
+	// .catch(console.error);
 
-	ENSLogin.loadProvider(
-		// "lib/modules/__debug.js", // Single file
-		// "QmWaVdwE3t9tvJp1kBAYtmLrLPqS7hVohGT9UqecxeWVuQ", // Single file
-		// "lib/modules/__debug_multi", // Multiple file
-		// "QmbhRi1dAsSG4yfMcPxRNeejX1a7P3NQqPMGXJt9pxpe6f", // Multiple Files
-		// "lib/modules//default/index.js", // default
-		"QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw", // default
-		config
-	)
-	.then(console.log)
-	.catch(console.error);
+	ENSLogin.create("hadriencroubois.eth", config).then(console.log).catch(console.error);
 
 
 
