@@ -188,12 +188,12 @@ class ENSLogin
 				{
 					case 'ipfs':
 						loadJSfromIPFS.api(uri, config)
-						.then(() => resolve(eval(entrypoint)(config.provider)))
+						.then(() => resolve(eval(entrypoint)(config)))
 						.catch(reject);
 						break;
 					case 'file':
 						loadJSfromFS(uri, config)
-						.then(() => resolve(eval(entrypoint)(config.provider)))
+						.then(() => resolve(eval(entrypoint)(config)))
 						.catch(reject);
 						break;
 					default:
