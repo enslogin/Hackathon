@@ -118,7 +118,14 @@ function getResolver(ens, node)
 {
 	return new Promise(async (resolve, reject) => {
 		ens.resolver(node).then(addr => {
-			resolve(new ethers.Contract(addr, RESOLVERABI, ens.provider));
+			if (addr === ethers.constants.AddressZero)
+			{
+				resolve(null);
+			}
+			else
+			{
+				resolve(new ethers.Contract(addr, RESOLVERABI, ens.provider));
+			}
 		})
 		.catch(reject);
 	});
@@ -136,19 +143,20 @@ function resolveUsername(username, config = {})
 			var addr, descr;
 			{
 				const node     = ENSTools.namehash(username);
-				const resolver = await getResolver(ens, node);
+				const resolver = (await getResolver(ens, node)) || reject();
 				addr           = await resolver.addr(node);
-				descr            = await resolver.text(node, 'web3-provider');
+				descr          = await resolver.text(node, 'web3-provider');
 			}
 			// DEBUG !
-			descr = "QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw";
+			descr = "ipfs://QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw"; // default on IPFS
+			// descr = "file://lib/modules/__debug.js";
 			// DEBUG !
 			if (descr !== '') { resolve({ addr, descr }); }
 
 			{
 				const node     = ENSTools.namehash(username.split('.').splice(1).join('.'));
-				const resolver = await getResolver(ens, node);
-				descr            = await resolver.text(node, 'web3-provider-default');
+				const resolver = (await getResolver(ens, node)) || reject();
+				descr          = await resolver.text(node, 'web3-provider-default');
 			}
 			if (descr !== '') { resolve({ addr, descr }); }
 
@@ -166,14 +174,31 @@ class ENSLogin
 {
 	static create(username, config = {})
 	{
-		return new Promise(async (resolve, reject) => {
+		return new Promise((resolve, reject) => {
 			resolveUsername(username, config)
 			.then(({ addr, descr }) => {
 				config.user = { addr, username, }
-				const [ uri, entrypoint = 'provider'] = descr.split(':');
-				loadJSfromIPFS.api(uri, config)
-				.then(() => resolve(eval(entrypoint)(config.provider)))
-				.catch(reject);
+
+				const parsed     = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
+				const protocol   = parsed[1];
+				const uri        = parsed[2];
+				const entrypoint = parsed[4] || 'provider';
+
+				switch (protocol)
+				{
+					case 'ipfs':
+						loadJSfromIPFS.api(uri, config)
+						.then(() => resolve(eval(entrypoint)(config.provider)))
+						.catch(reject);
+						break;
+					case 'file':
+						loadJSfromFS(uri, config)
+						.then(() => resolve(eval(entrypoint)(config.provider)))
+						.catch(reject);
+						break;
+					default:
+						reject(`protocole ${protocol} is not supported`);
+				}
 			})
 			.catch(reject);
 		});
