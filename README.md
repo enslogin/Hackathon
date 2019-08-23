@@ -8,6 +8,7 @@
 
 - [contracts](packages/contracts) - Smart contracts
 - [frontend](packages/frontend) - Frontend web app
+- [sdk](packages/sdk) - SDK library
 
 ## License
 

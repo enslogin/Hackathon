@@ -1,0 +1,15 @@
+{
+  "name": "ENSLogin",
+  "version": "1.0.0",
+  "license": "MIT",
+	"scripts": {
+		"test": "node src/core.js"
+	},
+  "dependencies": {
+    "ethers": "^4.0.33",
+    "ipfs": "^0.37.0"
+  },
+  "devDependencies": {
+    "ipfs-http-client": "^33.1.1"
+  }
+}
