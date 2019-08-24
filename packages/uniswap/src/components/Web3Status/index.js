@@ -228,14 +228,19 @@ export default function Web3Status() {
 
   function onClick() {
     if (walletModalError) {
+      console.log('1')
       openWalletModal()
     } else if (connectorName === 'Network' && (window.ethereum || window.web3)) {
+      console.log('2')
       setConnector('Injected', { suppressAndThrowErrors: true }).catch(error => {
+        console.log("in", error)
         if (error.code === Connector.errorCodes.UNSUPPORTED_NETWORK) {
+          console.log('in')
           setError(error)
         }
       })
     } else {
+      console.log('3')
       openWalletModal()
     }
   }
