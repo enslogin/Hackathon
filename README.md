@@ -13,8 +13,8 @@
 ## Providers
 
 - [Authereum](https://authereum.org/) - [Qmcbwok9ch62GPivNP7tkaZtdAG7hTgtxDTzrvY3JovDMh](https://cloudflare-ipfs.com/ipfs/Qmcbwok9ch62GPivNP7tkaZtdAG7hTgtxDTzrvY3JovDMh)
-- [Portis](https://www.portis.io/) - [QmZtDnRfjfnPmVYoJDa1mo877nqSD5VfmK8X8PdQGSLKEC](https://cloudflare-ipfs.com/ipfs/QmZtDnRfjfnPmVYoJDa1mo877nqSD5VfmK8X8PdQGSLKEC)
-- [Ledger](https://www.ledger.com/QmNNEMh1FsQXrggUnFHFm3pX6SGWL2rKB3ktKoptTxENPM) - [QmNNEMh1FsQXrggUnFHFm3pX6SGWL2rKB3ktKoptTxENPM](https://cloudflare-ipfs.com/ipfs/QmNNEMh1FsQXrggUnFHFm3pX6SGWL2rKB3ktKoptTxENPM)
+- [Portis](https://www.portis.io/) - [QmTSTRWp1WDkpcpByoTzPBQd6HR1Pjuyt8tErMyiAZTQmL](https://cloudflare-ipfs.com/ipfs/QmTSTRWp1WDkpcpByoTzPBQd6HR1Pjuyt8tErMyiAZTQmL)
+- [Ledger](https://www.ledger.com) - [QmSwKmxaVQ4hfHeRq3fjkWAnnC79DBCuU8qy5cx5qQUVQQ](https://cloudflare-ipfs.com/ipfs/QmSwKmxaVQ4hfHeRq3fjkWAnnC79DBCuU8qy5cx5qQUVQQ)
 - [MetaMask](https://metamask.io/QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q) - [QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q](https://cloudflare-ipfs.com/ipfs/QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q)
 
 ## License
