@@ -1,0 +1,9 @@
+{
+  "name": "enslogin-portis",
+  "version": "1.0.0",
+  "author": "hadrien croubois",
+  "scripts": {
+    "build": "browserify lib/portis.js -o build/portis.js"
+  },
+  "license": "MIT"
+}
