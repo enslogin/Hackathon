@@ -25,6 +25,15 @@ const UI = {
 class Account extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      account: null
+    }
+
+    this.props.web3.eth.getAccounts().then(account =>
+      this.setState({
+        account
+      })
+    )
   }
 
   handleLogout= () => {
@@ -37,7 +46,7 @@ class Account extends React.Component {
         <UI.AccountModal>
           <UI.AccountSections>
             <a href={`https://etherscan.io/tx/0x0000000000000000000000000000000000000000`}>
-              0x123...
+              {this.state.account}
             </a>
           </UI.AccountSections>
           <UI.AccountSections>

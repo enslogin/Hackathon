@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
+import Web3 from 'web3'
 
 import Account from './Account'
 
@@ -25,6 +26,7 @@ class LoginForm extends React.Component {
     super(props)
 
     this.state = {
+      web3: undefined,
       ensName: '',
       selectedProviderName: '',
       isCurrentProvider: false
@@ -33,6 +35,9 @@ class LoginForm extends React.Component {
 
   logout = () => {
     this.setState({
+      web3: undefined,
+      ensName: '',
+      selectedProviderName: '',
       isCurrentProvider: false
     })
   }
@@ -54,7 +59,7 @@ class LoginForm extends React.Component {
                   />
             </form>
             : <div>
-                <Account logout={this.logout} />
+                <Account logout={this.logout} web3={this.state.web3} />
               </div>
           }
         </UI.FormContainer>
@@ -85,12 +90,17 @@ class LoginForm extends React.Component {
       },
     }
     try {
-      let web3 = await ensLogin.connect(this.state.ensName, config)
-      await this.getProvider(web3)
-      await web3.enable().then(console.log).catch(console.error);
-    } catch (err) {
-      await this.getProvider()
-    }
+      let firstWeb3 = await ensLogin.connect(this.state.ensName, config)
+      let web3 = new Web3(firstWeb3)
+
+      this.setState({
+        web3
+      })
+      await this.getProvider(this.state.web3)
+      try {
+        this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
+      } catch (e) {}
+    } catch (err) {}
   }, 250)
 
   handleSubmit = async (event) => {
@@ -101,7 +111,7 @@ class LoginForm extends React.Component {
 
   getProvider (web3 = '') {
     try {
-      if (web3._metamask && this.state.ensName) {
+      if (web3 && this.state.ensName) {
         this.setState({
           selectedProviderName: "Metamask",
           isCurrentProvider: true
