@@ -1,5 +1,5 @@
 {
-  "name": "ENSLogin",
+  "name": "ens-login-sdk",
   "version": "1.0.0",
   "license": "MIT",
 	"scripts": {
