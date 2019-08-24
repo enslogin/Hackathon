@@ -28,8 +28,8 @@ class LoginForm extends React.Component {
     this.state = {
       web3: undefined,
       ensName: '',
-      selectedProviderName: '',
-      isCurrentProvider: false
+      isCurrentProvider: false,
+      account: ''
     }
   }
 
@@ -37,8 +37,8 @@ class LoginForm extends React.Component {
     this.setState({
       web3: undefined,
       ensName: '',
-      selectedProviderName: '',
-      isCurrentProvider: false
+      isCurrentProvider: false,
+      account: ''
     })
   }
 
@@ -59,7 +59,7 @@ class LoginForm extends React.Component {
                   />
             </form>
             : <div>
-                <Account logout={this.logout} web3={this.state.web3} />
+                <Account logout={this.logout} web3={this.state.web3} account={this.state.account} />
               </div>
           }
         </UI.FormContainer>
@@ -93,12 +93,15 @@ class LoginForm extends React.Component {
       let firstWeb3 = await ensLogin.connect(this.state.ensName, config)
       let web3 = new Web3(firstWeb3)
 
-      this.setState({
-        web3
-      })
-      await this.getProvider(this.state.web3)
+      this.setState({ web3 })
+      let isProvider = await this.getProvider(this.state.web3)
       try {
-        this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
+        await this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
+        let accounts = await this.state.web3.eth.getAccounts()
+        this.setState({
+          account: accounts[0],
+          isCurrentProvider: isProvider
+        })
       } catch (e) {}
     } catch (err) {}
   }, 250)
@@ -112,19 +115,14 @@ class LoginForm extends React.Component {
   getProvider (web3 = '') {
     try {
       if (web3 && this.state.ensName) {
-        this.setState({
-          selectedProviderName: "Metamask",
-          isCurrentProvider: true
-        })
+        return true
       } else {
-        this.setState({
-          selectedProviderName: "",
-          isCurrentProvider: false
-        })
+        return false
       }
     } catch (e) {
       console.log(e)
     }
+    return false
   }
 }
 

@@ -25,15 +25,6 @@ const UI = {
 class Account extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      account: null
-    }
-
-    this.props.web3.eth.getAccounts().then(account =>
-      this.setState({
-        account
-      })
-    )
   }
 
   handleLogout= () => {
@@ -45,8 +36,8 @@ class Account extends React.Component {
       <UI.Container>
         <UI.AccountModal>
           <UI.AccountSections>
-            <a href={`https://etherscan.io/tx/0x0000000000000000000000000000000000000000`}>
-              {this.state.account}
+            <a href={`https://goerli.etherscan.io/address/${this.props.account}`}>
+              {this.props.account.substring(0,5)}...
             </a>
           </UI.AccountSections>
           <UI.AccountSections>
