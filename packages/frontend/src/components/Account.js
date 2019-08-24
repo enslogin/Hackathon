@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const UI = {
   Container: styled.div`
@@ -36,6 +38,16 @@ const UI = {
   `
  }
 
+const StyledButton = styled(Button)`
+  border-radius: 2px;
+  border-style: solid;
+  border-color: #4F7CE8;
+  color: white;
+  height: 32px;
+  box-shadow: 0 3px 5px 2px #4F7CE8;
+  margin-bottom: 2px;
+`;
+
 class Account extends React.Component {
   constructor(props) {
     super(props)
@@ -61,11 +73,8 @@ class Account extends React.Component {
               <UI.AccountSections>
                 {this.props.balance} ETH
               </UI.AccountSections>
-              {/* <UI.AccountSections>
-                Send
-              </UI.AccountSections> */}
-              <UI.AccountSections>
-                <button onClick={this.handleLogout}>Log Out</button>
+              <UI.AccountSections style={{ marginTop: '0.2em' }}>
+                <StyledButton onClick={this.handleLogout}>Log Out</StyledButton>
               </UI.AccountSections>
             </UI.AccountModal>
             <UI.StyledEns src="../right.png" alt="Right" />
