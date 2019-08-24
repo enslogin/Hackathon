@@ -28,7 +28,7 @@ const ETH = {
 }
 
 const INITIAL_TOKENS_CONTEXT = {
-  42: {
+  4: {
     '0xac94ea989f6955c67200dd67f0101e1865a560ea': {
       [NAME]: 'Maker',
       [SYMBOL]: 'MKR',

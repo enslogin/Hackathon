@@ -39,7 +39,7 @@ const injectWeb3 = async () => {
 
   const ensLoginConfig = {
     provider: {
-      network: 'goerli'
+      network: 'rinkeby'
     }
   }
 
