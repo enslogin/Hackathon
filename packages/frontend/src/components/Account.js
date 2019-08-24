@@ -47,7 +47,7 @@ class Account extends React.Component {
             Send
           </UI.AccountSections> */}
           <UI.AccountSections>
-            <button onClick={this.handleLogout}>Redirect</button>
+            <button onClick={this.handleLogout}>Log Out</button>
           </UI.AccountSections>
         </UI.AccountModal>
       </UI.Container>
