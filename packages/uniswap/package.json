@@ -5,9 +5,12 @@
   "homepage": "https://uniswap.exchange",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.5.5",
     "@reach/dialog": "^0.2.8",
     "@reach/tooltip": "^0.2.0",
     "@reach/utils": "^0.2.3",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
     "copy-to-clipboard": "^3.2.0",
     "ens-login-sdk": "1.0.0",
     "escape-string-regexp": "^2.0.0",
