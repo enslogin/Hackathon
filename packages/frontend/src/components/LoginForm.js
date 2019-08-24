@@ -91,10 +91,10 @@ class LoginForm extends React.Component {
       },
     }
     try {
-      let firstWeb3 = await ensLogin.connect(this.state.ensName, config)
-      let web3 = new Web3(firstWeb3)
+      let web3 = new Web3(await ensLogin.connect(this.state.ensName, config))
 
       this.setState({ web3 })
+
       let isProvider = await this.getProvider(this.state.web3)
       try {
         await this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
