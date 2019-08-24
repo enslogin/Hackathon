@@ -756,7 +756,7 @@ export default function Swap({ initialCurrency }) {
       </Flex>
       <AuthereumLinkContainer>
         <Link
-          href={`https://rinkeby.accounts.authereum.org`}
+          href={`https://ropsten.accounts.authereum.org`}
           style={{
             maxWidth: '250px',
             fontSize: '12px'
@@ -771,7 +771,7 @@ export default function Swap({ initialCurrency }) {
           color: 'gray'
         }}
       >
-        Note: You are on the Rinkeby test network. The ETH and tokens on this page are on the Rinkeby network and do not have any value.
+        Note: You are on the Ropsten test network. The ETH and tokens on this page are on the Ropsten network and do not have any value.
       </Flex>
     </>
   )

@@ -61,7 +61,7 @@ export default function Header() {
               <h1 id="title">Uniswap</h1>
             </Link>
             <Subtitle>
-              RINKEBY
+              ROPSTEN
             </Subtitle>
           </TitleContainer>
         </Title>
