@@ -1,0 +1,9 @@
+{
+  "name": "enslogin-ledger",
+  "version": "1.0.0",
+  "author": "hadrien croubois",
+  "scripts": {
+    "build": "browserify lib/ledger.js -o build/ledger.js"
+  },
+  "license": "MIT"
+}
