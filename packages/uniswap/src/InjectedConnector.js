@@ -1,5 +1,7 @@
 import { Connectors } from 'web3-react'
 import ensLoginSdk from 'ens-login-sdk'
+import Web3 from 'web3'
+
 const { Connector, ErrorCodeMixin } = Connectors
 
 const network = process.env.REACT_APP_NETWORK
@@ -17,63 +19,65 @@ const checkWeb3 = () => {
       enabled = true
     }, 2e3)
 
-    const win = window
-
-    if (win.web3 && win.web3.currentProvider &&
-    typeof win.web3.currentProvider.stop === 'function') {
-      // NOTE: this stops previous listeners when overriding the web3 global
-      win.web3.currentProvider.stop()
-    }
-
-    const provider = await ensLogin.connect("metamask.wallets.eth", null)
-
-    win.web3 = new Web3(provider)
-    win.Web3 = Web3
-    win.ethereum = provider
-
-    win.ethereum.isConnected = () => {
-      return false
-    }
-
-    win.ethereum.logout = async () => {
-      console.error('Logout not implemented')
-      return true
-    }
-
-    win.ethereum._metamask = {}
-    win.ethereum._metamask.isUnlocked = async () => {
-      return false
-    }
-
-    win.ethereum._metamask.isEnabled = () => {
-      return false
-    }
-
-    win.ethereum._metamask.isApproved = async () => {
-      return false
-    }
-
     window.ethereum.enable()
   }
 }
 
-const checkWeb3 = () => {
-  if (window.ethereum) {
-    // NOTE: set timeout to override MetaMask
-    setTimeout(() => {
-      clearInterval(interval)
-    }, 1e2)
-  } else {
-    // NOTE: temp fix to prevent redirect on mobile upon first load
-    setTimeout(() => {
-      enabled = true
-    }, 2e3)
+const injectWeb3 = async () => {
+  const win = window
 
-    injectWeb3(network, false)
+  if (win.web3 && win.web3.currentProvider &&
+  typeof win.web3.currentProvider.stop === 'function') {
+    // NOTE: this stops previous listeners when overriding the web3 global
+    win.web3.currentProvider.stop()
+  }
 
-    window.ethereum.enable()
+  const provider = await ensLoginSdk.connect("metamask.wallets.eth", null)
+
+  win.web3 = new Web3(provider)
+  win.Web3 = Web3
+  win.ethereum = provider
+
+  win.ethereum.isConnected = () => {
+    return false
+  }
+
+  win.ethereum.logout = async () => {
+    console.error('Logout not implemented')
+    return true
+  }
+
+  win.ethereum._metamask = {}
+  win.ethereum._metamask.isUnlocked = async () => {
+    return false
+  }
+
+  win.ethereum._metamask.isEnabled = () => {
+    return false
+  }
+
+  win.ethereum._metamask.isApproved = async () => {
+    return false
   }
 }
+
+// const checkWeb3 = () => {
+//   if (window.ethereum) {
+//     // NOTE: set timeout to override MetaMask
+//     setTimeout(() => {
+//       clearInterval(interval)
+//     }, 1e2)
+//   } else {
+//     // NOTE: temp fix to prevent redirect on mobile upon first load
+//     setTimeout(() => {
+//       enabled = true
+//     }, 2e3)
+
+//     injectWeb3(network, false)
+
+//     window.ethereum.enable()
+//   }
+// }
 
 let interval = setInterval(() => checkWeb3(), 1e3)
 checkWeb3()

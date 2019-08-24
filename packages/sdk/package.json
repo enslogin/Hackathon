@@ -4,7 +4,8 @@
   "license": "MIT",
 	"scripts": {
 		"build": "browserify -r ./lib/enslogin.js -o public/js/bundle.js"
-	},
+  },
+  "main": "lib/enslogin.js",
   "dependencies": {
     "ethers": "^4.0.33",
     "ipfs": "^0.37.0",

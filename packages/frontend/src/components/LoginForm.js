@@ -5,7 +5,7 @@ import Web3 from 'web3'
 
 import Account from './Account'
 
-const ensLogin = require("../../node_modules/ENSLogin/lib/enslogin.js");
+const ensLogin = require("../../node_modules/ens-login-sdk/lib/enslogin.js");
 
 const UI = {
   Container: styled.div`
