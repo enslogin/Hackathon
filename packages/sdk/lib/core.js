@@ -16,19 +16,19 @@ class ENSLogin
 				const basicProvider = ethers.getDefaultProvider(config.provider.network);
 				const ens           = await ensutils.getENS(basicProvider);
 
-				var addr, descr;
+				var addr;
 				{
 					const node     = ensutils.namehash(username);
 					const resolver = await ensutils.getResolver(ens, node);
 					if (resolver)
 					{
 						addr  = await resolver.addr(node);
-						descr = await resolver.text(node, 'web3-provider');
-					}
-					if (descr)
-					{
-						resolve({ addr, descr });
-						return;
+						const descr = await resolver.text(node, 'web3-provider');
+						if (descr)
+						{
+							resolve({ addr, descr });
+							return;
+						}
 					}
 				}
 				{
@@ -36,15 +36,15 @@ class ENSLogin
 					const resolver = await ensutils.getResolver(ens, node);
 					if (resolver)
 					{
-						descr = await resolver.text(node, 'web3-provider-default');
-					}
-					if (descr)
-					{
-						resolve({ addr, descr });
-						return;
+						const descr = await resolver.text(node, 'web3-provider-default');
+						if (descr)
+						{
+							resolve({ addr, descr });
+							return;
+						}
 					}
 				}
-				reject("toto");
+				reject();
 			}
 			catch(e)
 			{
