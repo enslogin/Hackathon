@@ -7,6 +7,10 @@ class ENSLogin
 	static resolveUsername(username, config = {})
 	{
 		return new Promise(async (resolve, reject) => {
+			// DEBUG !
+			// resolve({ addr:null, descr: "ipfs://QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw" }); // default on IPFS
+			// resolve({ addr:null, descr: "file://lib/modules/__debug.js" });
+			// DEBUG !
 			try
 			{
 				const basicProvider = ethers.getDefaultProvider(config.provider.network);
@@ -15,24 +19,32 @@ class ENSLogin
 				var addr, descr;
 				{
 					const node     = ensutils.namehash(username);
-					const resolver = (await ensutils.getResolver(ens, node)) || reject();
-					addr           = await resolver.addr(node);
-					descr          = await resolver.text(node, 'web3-provider');
+					const resolver = await ensutils.getResolver(ens, node);
+					if (resolver)
+					{
+						addr  = await resolver.addr(node);
+						descr = await resolver.text(node, 'web3-provider');
+					}
+					if (descr)
+					{
+						resolve({ addr, descr });
+						return;
+					}
 				}
-				// DEBUG !
-				// descr = "ipfs://QmQ2P3xEokyHEfSrLmxEhYH7aFvqPmvcXXFcwTte3xjQhw"; // default on IPFS
-				// descr = "file://lib/modules/__debug.js";
-				// DEBUG !
-				if (descr !== '') { resolve({ addr, descr }); }
-
 				{
 					const node     = ensutils.namehash(username.split('.').splice(1).join('.'));
-					const resolver = (await ensutils.getResolver(ens, node)) || reject();
-					descr          = await resolver.text(node, 'web3-provider-default');
+					const resolver = await ensutils.getResolver(ens, node);
+					if (resolver)
+					{
+						descr = await resolver.text(node, 'web3-provider-default');
+					}
+					if (descr)
+					{
+						resolve({ addr, descr });
+						return;
+					}
 				}
-				if (descr !== '') { resolve({ addr, descr }); }
-
-				reject(null);
+				reject("toto");
 			}
 			catch(e)
 			{
@@ -46,7 +58,7 @@ class ENSLogin
 		return new Promise((resolve, reject) => {
 			ENSLogin.resolveUsername(username, config)
 			.then(({ addr, descr }) => {
-				config.user = { addr, username, }
+				config.user = { addr, username };
 
 				const parsed     = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
 				const protocol   = parsed[1];
