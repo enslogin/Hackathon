@@ -29,7 +29,8 @@ class LoginForm extends React.Component {
       web3: undefined,
       ensName: '',
       isCurrentProvider: false,
-      account: ''
+      account: '',
+      balance: null
     }
   }
 
@@ -59,7 +60,7 @@ class LoginForm extends React.Component {
                   />
             </form>
             : <div>
-                <Account logout={this.logout} web3={this.state.web3} account={this.state.account} />
+                <Account logout={this.logout} web3={this.state.web3} account={this.state.account} balance={this.state.balance} />
               </div>
           }
         </UI.FormContainer>
@@ -98,8 +99,10 @@ class LoginForm extends React.Component {
       try {
         await this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
         let accounts = await this.state.web3.eth.getAccounts()
+        let balance = await this.state.web3.eth.getBalance(accounts[0])
         this.setState({
           account: accounts[0],
+          balance: Math.round(this.state.web3.utils.fromWei(balance) * 1000) / 1000,
           isCurrentProvider: isProvider
         })
       } catch (e) {}

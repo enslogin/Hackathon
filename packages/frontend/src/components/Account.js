@@ -41,7 +41,7 @@ class Account extends React.Component {
             </a>
           </UI.AccountSections>
           <UI.AccountSections>
-            0.1 ETH
+            {this.props.balance} ETH
           </UI.AccountSections>
           {/* <UI.AccountSections>
             Send
