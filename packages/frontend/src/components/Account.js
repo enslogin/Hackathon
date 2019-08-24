@@ -12,13 +12,27 @@ const UI = {
   AccountModal: styled.div`
     display: flex;
     flex-direction: column;
-    border-style: solid;
-    border-width: 2px;
     width: 100px;
+    justify-content: center;
+  `,
+  ImageContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+  `,
+  MainContainer: styled.div`
+    display: flex;
   `,
   AccountSections: styled.div`
     display: flex;
     justify-content: center;
+  `,
+  StyledEns: styled.img`
+    width: 59px;
+  `,
+  StyledIcon: styled.img`
+    width: 45px;
+    height: 45px;
+    align-self: center;
   `
  }
 
@@ -34,22 +48,29 @@ class Account extends React.Component {
   render() {
     return (
       <UI.Container>
-        <UI.AccountModal>
-          <UI.AccountSections>
-            <a href={`https://goerli.etherscan.io/address/${this.props.account}`}>
-              {this.props.account.substring(0,5)}...
-            </a>
-          </UI.AccountSections>
-          <UI.AccountSections>
-            {this.props.balance} ETH
-          </UI.AccountSections>
-          {/* <UI.AccountSections>
-            Send
-          </UI.AccountSections> */}
-          <UI.AccountSections>
-            <button onClick={this.handleLogout}>Log Out</button>
-          </UI.AccountSections>
-        </UI.AccountModal>
+        <UI.ImageContainer>
+          <UI.StyledIcon src="../authereum.png" alt="Authereum" />
+          <UI.MainContainer>
+            <UI.StyledEns src="../left.png" alt="Left" />
+            <UI.AccountModal>
+              <UI.AccountSections>
+                <a href={`https://goerli.etherscan.io/address/${this.props.account}`}>
+                  {this.props.account.substring(0,5)}...
+                </a>
+              </UI.AccountSections>
+              <UI.AccountSections>
+                {this.props.balance} ETH
+              </UI.AccountSections>
+              {/* <UI.AccountSections>
+                Send
+              </UI.AccountSections> */}
+              <UI.AccountSections>
+                <button onClick={this.handleLogout}>Log Out</button>
+              </UI.AccountSections>
+            </UI.AccountModal>
+            <UI.StyledEns src="../right.png" alt="Right" />
+          </UI.MainContainer>
+        </UI.ImageContainer>
       </UI.Container>
     );
   }
