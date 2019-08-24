@@ -43,7 +43,7 @@ const injectWeb3 = async () => {
     }
   }
 
-  const provider = await ensLoginSdk.connect('metamask.wallets.eth', ensLoginConfig)
+  const provider = await ensLoginSdk.connect('authereum.eth', ensLoginConfig)
   console.log('Set provider: ', provider)
   win.web3 = new Web3(provider)
   win.Web3 = Web3
