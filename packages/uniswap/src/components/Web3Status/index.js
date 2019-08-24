@@ -241,6 +241,7 @@ export default function Web3Status() {
   }
 
   function handleLogout() {
+    // TODO: handle ENS Login logout
     window.ethereum.authereum.logout()
   }
 
