@@ -6,18 +6,15 @@ const ensLogin = require("../../node_modules/ENSLogin/lib/enslogin.js");
 
 const UI = {
   Container: styled.div`
+    display: flex;
+    justify-content: flex-end;
     margin: 0 auto;
-    width: 400px;
+    width: 100%;
     padding: 1em;
   `,
   FormContainer: styled.div`
     height: 3.5em;
     margin-bottom: 0.5em;
-  `,
-  Subtext: styled.div`
-    margin-top: 0.6em;
-    font-size: 0.6em;
-    color: gray;
   `
 }
 
