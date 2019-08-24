@@ -1,0 +1,12 @@
+{
+  "name": "enslogin-torus",
+  "version": "1.0.0",
+  "author": "hadrien croubois",
+  "scripts": {
+    "build": "browserify lib/torus.js | minify --js > build/torus.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@toruslabs/torus-embed": "0.0.28"
+  }
+}
