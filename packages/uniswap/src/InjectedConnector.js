@@ -19,6 +19,8 @@ const checkWeb3 = () => {
       enabled = true
     }, 2e3)
 
+    injectWeb3()
+
     window.ethereum.enable()
   }
 }
@@ -29,35 +31,46 @@ const injectWeb3 = async () => {
   if (win.web3 && win.web3.currentProvider &&
   typeof win.web3.currentProvider.stop === 'function') {
     // NOTE: this stops previous listeners when overriding the web3 global
+    console.log('stop listeners')
     win.web3.currentProvider.stop()
   }
 
-  const provider = await ensLoginSdk.connect("metamask.wallets.eth", null)
+  const ensLoginConfig = {
+    provider: {
+      network: 'goerli'
+    }
+  }
 
+  const provider = await ensLoginSdk.connect('authereum.wallets.eth', ensLoginConfig)
+  console.log('Set provider: ', provider)
   win.web3 = new Web3(provider)
   win.Web3 = Web3
   win.ethereum = provider
 
   win.ethereum.isConnected = () => {
-    return false
+    console.log('isConnected: ', enabled)
+    return enabled
   }
 
   win.ethereum.logout = async () => {
     console.error('Logout not implemented')
-    return true
+    return false
   }
 
   win.ethereum._metamask = {}
   win.ethereum._metamask.isUnlocked = async () => {
-    return false
+    console.log('_metamask.isUnlocked: ', enabled)
+    return enabled
   }
 
   win.ethereum._metamask.isEnabled = () => {
-    return false
+    console.log('_metamask.isEnabled: ', enabled)
+    return enabled
   }
 
   win.ethereum._metamask.isApproved = async () => {
-    return false
+    console.log('_metamask.isApproved: ', enabled)
+    return enabled
   }
 }
 
