@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.3.3",
+    "ENSLogin": "1.0.0",
     "ens-login-sdk": "1.0.0",
     "lodash": "^4.17.15",
     "react": "^16.9.0",
