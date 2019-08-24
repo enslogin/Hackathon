@@ -22,6 +22,7 @@ function resolveUsername(username, config = {})
 				{
 					addr  = await resolver.addr(node);
 					const descr = await resolver.text(node, 'web3-provider');
+					console.log('Provider URL at web3-provider: ', descr)
 					if (descr)
 					{
 						resolve({ addr, descr });
@@ -35,6 +36,7 @@ function resolveUsername(username, config = {})
 				if (resolver)
 				{
 					const descr = await resolver.text(node, 'web3-provider-default');
+					console.log('Provider URL at web3-provider-default: ', descr)
 					if (descr)
 					{
 						resolve({ addr, descr });

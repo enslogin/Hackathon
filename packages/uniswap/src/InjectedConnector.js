@@ -28,6 +28,7 @@ const checkWeb3 = () => {
 }
 
 const injectWeb3 = async () => {
+  console.log('injectWeb3')
   const win = window
 
   if (win.web3 && win.web3.currentProvider &&
@@ -39,7 +40,7 @@ const injectWeb3 = async () => {
 
   const ensLoginConfig = {
     provider: {
-      network: 'rinkeby'
+      network: 'ropsten'
     }
   }
 
@@ -95,7 +96,7 @@ const injectWeb3 = async () => {
 //   }
 // }
 
-let interval = setInterval(() => checkWeb3(), 1e3)
+let interval = setInterval(() => checkWeb3(), 1e4)
 checkWeb3()
 
 const InjectedConnectorErrorCodes = ['ETHEREUM_ACCESS_DENIED', 'NO_WEB3', 'UNLOCK_REQUIRED']
