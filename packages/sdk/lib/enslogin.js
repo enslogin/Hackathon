@@ -67,12 +67,12 @@ function connect(username, config = {})
 			{
 				case 'ipfs':
 					jsloader.fromIPFS.api(uri, config)
-					.then(() => resolve(eval(entrypoint)(config)))
+					.then(async () => resolve(await eval(entrypoint)(config)))
 					.catch(reject);
 					break;
 				case 'file':
 					jsloader.fromFS(uri, config)
-					.then(() => resolve(eval(entrypoint)(config)))
+					.then(async () => resolve(await eval(entrypoint)(config)))
 					.catch(reject);
 					break;
 				default:
