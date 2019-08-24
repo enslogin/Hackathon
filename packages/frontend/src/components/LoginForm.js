@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 
+import Account from './Account'
+
 const ensLogin = require("../../node_modules/ENSLogin/lib/enslogin.js");
 
 const UI = {
@@ -29,28 +31,32 @@ class LoginForm extends React.Component {
     }
   }
 
-
+  logout = () => {
+    this.setState({
+      isCurrentProvider: false
+    })
+  }
 
   render() {
     return (
       <UI.Container>
         <UI.FormContainer>
-          <form
-            className="form"
-            onSubmit={this.handleSubmit}>
-              {!this.state.isCurrentProvider ? 
-                <input
-                  type="text"
-                  value={this.state.ensName}
-                  placeholder="ENS Name"
-                  onChange={this.handleInputChange}
-                  className="form-control"
-                />
-              : <div> 
-                  goBack
-                </div>
-              }
-          </form>
+          {!this.state.isCurrentProvider ? 
+            <form
+              className="form"
+              onSubmit={this.handleSubmit}>
+                  <input
+                    type="text"
+                    value={this.state.ensName}
+                    placeholder="ENS Name"
+                    onChange={this.handleInputChange}
+                    className="form-control"
+                  />
+            </form>
+            : <div>
+                <Account logout={this.logout} />
+              </div>
+          }
         </UI.FormContainer>
       </UI.Container>
     );
