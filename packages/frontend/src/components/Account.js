@@ -36,18 +36,18 @@ class Account extends React.Component {
       <UI.Container>
         <UI.AccountModal>
           <UI.AccountSections>
-            <a href={`https://etherscan.io/tx/0x0000000000000000000000000000000000000000`}>
-              0x123...
+            <a href={`https://goerli.etherscan.io/address/${this.props.account}`}>
+              {this.props.account.substring(0,5)}...
             </a>
           </UI.AccountSections>
           <UI.AccountSections>
-            0.1 ETH
+            {this.props.balance} ETH
           </UI.AccountSections>
           {/* <UI.AccountSections>
             Send
           </UI.AccountSections> */}
           <UI.AccountSections>
-            <button onClick={this.handleLogout}>Redirect</button>
+            <button onClick={this.handleLogout}>Log Out</button>
           </UI.AccountSections>
         </UI.AccountModal>
       </UI.Container>

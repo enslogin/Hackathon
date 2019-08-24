@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
+import Web3 from 'web3'
 
 import Account from './Account'
 
@@ -25,15 +26,20 @@ class LoginForm extends React.Component {
     super(props)
 
     this.state = {
+      web3: undefined,
       ensName: '',
-      selectedProviderName: '',
-      isCurrentProvider: false
+      isCurrentProvider: false,
+      account: '',
+      balance: null
     }
   }
 
   logout = () => {
     this.setState({
-      isCurrentProvider: false
+      web3: undefined,
+      ensName: '',
+      isCurrentProvider: false,
+      account: ''
     })
   }
 
@@ -54,7 +60,7 @@ class LoginForm extends React.Component {
                   />
             </form>
             : <div>
-                <Account logout={this.logout} />
+                <Account logout={this.logout} web3={this.state.web3} account={this.state.account} balance={this.state.balance} />
               </div>
           }
         </UI.FormContainer>
@@ -85,12 +91,22 @@ class LoginForm extends React.Component {
       },
     }
     try {
-      let web3 = await ensLogin.connect(this.state.ensName, config)
-      await this.getProvider(web3)
-      await web3.enable().then(console.log).catch(console.error);
-    } catch (err) {
-      await this.getProvider()
-    }
+      let web3 = new Web3(await ensLogin.connect(this.state.ensName, config))
+
+      this.setState({ web3 })
+
+      let isProvider = await this.getProvider(this.state.web3)
+      try {
+        await this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
+        let accounts = await this.state.web3.eth.getAccounts()
+        let balance = await this.state.web3.eth.getBalance(accounts[0])
+        this.setState({
+          account: accounts[0],
+          balance: Math.round(this.state.web3.utils.fromWei(balance) * 1000) / 1000,
+          isCurrentProvider: isProvider
+        })
+      } catch (e) {}
+    } catch (err) {}
   }, 250)
 
   handleSubmit = async (event) => {
@@ -101,20 +117,15 @@ class LoginForm extends React.Component {
 
   getProvider (web3 = '') {
     try {
-      if (web3._metamask && this.state.ensName) {
-        this.setState({
-          selectedProviderName: "Metamask",
-          isCurrentProvider: true
-        })
+      if (web3 && this.state.ensName) {
+        return true
       } else {
-        this.setState({
-          selectedProviderName: "",
-          isCurrentProvider: false
-        })
+        return false
       }
     } catch (e) {
       console.log(e)
     }
+    return false
   }
 }
 
