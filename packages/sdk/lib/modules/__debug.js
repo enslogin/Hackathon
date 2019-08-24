@@ -6,4 +6,4 @@ class Provider {
 	}
 }
 
-provider = (config) => new Provider(config)
+window.provider = (config) => new Provider(config)

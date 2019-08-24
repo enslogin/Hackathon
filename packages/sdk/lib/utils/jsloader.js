@@ -1,5 +1,5 @@
 const fs         = require('fs');
-const IPFS       = require('ipfs');
+// const IPFS       = require('ipfs');
 const IPFSHTTP   = require('ipfs-http-client')
 const vm         = require('vm');
 
@@ -35,21 +35,21 @@ class fromIPFS
 		);
 	}
 
-	static standalone(fileHash, config = {})
-	{
-		return new Promise((resolve, reject) => {
-			const node = new IPFS();
-			node.once('ready', () => {
-				console.log('node started');
-				this.__node(node, fileHash)
-				.then(() =>{ node.stop(resolve); })
-				.catch(reject);
-			});
-			node.once('stop', () => {
-				console.log('node stopped');
-			});
-		});
-	}
+	// static standalone(fileHash, config = {})
+	// {
+	// 	return new Promise((resolve, reject) => {
+	// 		const node = new IPFS();
+	// 		node.once('ready', () => {
+	// 			console.log('node started');
+	// 			this.__node(node, fileHash)
+	// 			.then(() =>{ node.stop(resolve); })
+	// 			.catch(reject);
+	// 		});
+	// 		node.once('stop', () => {
+	// 			console.log('node stopped');
+	// 		});
+	// 	});
+	// }
 }
 
 function fromFS(path, config = {})

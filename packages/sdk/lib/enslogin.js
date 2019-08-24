@@ -42,7 +42,7 @@ function resolveUsername(username, config = {})
 					}
 				}
 			}
-			reject();
+			reject("No web3 provider specified for this user");
 		}
 		catch(e)
 		{

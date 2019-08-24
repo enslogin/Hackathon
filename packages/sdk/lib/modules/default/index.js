@@ -1,1 +1,1 @@
-const provider = (config) => window.ethereum;
+window.provider = (config) => window.ethereum;

@@ -17,8 +17,10 @@ const enslogin = require("./enslogin");
 		},
 	}
 
-	// enslogin.connect("hadriencroubois.mylogin.eth", config).then(console.log).catch(console.error);
-	enslogin.connect("metamask.eth", config).then(console.log).catch(console.error);
+	// enslogin.connect("hadriencroubois.mylogin.eth", config)
+	enslogin.connect("metamask.eth", config)
+	.then(console.log)
+	.catch(e => console.error("ERROR:", e));
 
 
 })().catch(console.eroor);
