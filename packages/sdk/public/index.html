@@ -8,6 +8,8 @@
 	</head>
 	<body>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
+
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
 		<script src="js/bundle.js"></script>
 		<script>
 			const enslogin = require('/lib/enslogin.js');
@@ -27,11 +29,12 @@
 				},
 			}
 
-			enslogin.connect("metamask.eth", config)
-			.then(web3 => {
-				web3.enable().then(console.log).catch(console.error);
-			})
-			.catch(e => console.error("ERROR:", e));
+			// enslogin.connect("metamask.wallets.eth", config)
+			// enslogin.connect("ledger.wallets.eth", config)
+			// .then(web3 => {
+			// 	web3.enable().then(console.log).catch(console.error);
+			// })
+			// .catch(e => console.error("ERROR:", e));
 
 		</script>
 		<div id="app"></div>
