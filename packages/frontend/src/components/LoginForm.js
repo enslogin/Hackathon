@@ -27,7 +27,8 @@ class LoginForm extends React.Component {
 
     this.state = {
       ensName: '',
-      selectedProvider: ''
+      selectedProviderName: '',
+      isCurrentProvider: false
     }
   }
 
@@ -40,25 +41,20 @@ class LoginForm extends React.Component {
           <form
             className="form"
             onSubmit={this.handleSubmit}>
-              <input
-                type="text"
-                value={this.state.ensName}
-                placeholder="ENS Name"
-                onChange={this.handleInputChange}
-                className="form-control"
-              />
-              {this.state.currentProvider ? 
-                <UI.Subtext>
-                  {`You are about to log in with ${this.state.currentProvider}`}
-                </UI.Subtext>
-              : null
+              {!this.state.isCurrentProvider ? 
+                <input
+                  type="text"
+                  value={this.state.ensName}
+                  placeholder="ENS Name"
+                  onChange={this.handleInputChange}
+                  className="form-control"
+                />
+              : <div> 
+                  goBack
+                </div>
               }
-        </form>
-      </UI.FormContainer>
-      <button
-        type="submit"
-        className="btn btn-primary">Login
-      </button>
+          </form>
+        </UI.FormContainer>
       </UI.Container>
     );
   }
@@ -92,7 +88,7 @@ class LoginForm extends React.Component {
     } catch (err) {
       await this.getProvider()
     }
-  }, 300)
+  }, 250)
 
   handleSubmit = async (event) => {
     event.preventDefault()
@@ -104,18 +100,19 @@ class LoginForm extends React.Component {
     try {
       if (web3._metamask && this.state.ensName) {
         this.setState({
-          currentProvider: "Metamask"
+          selectedProviderName: "Metamask",
+          isCurrentProvider: true
         })
       } else {
         this.setState({
-          currentProvider: ""
+          selectedProviderName: "",
+          isCurrentProvider: false
         })
       }
     } catch (e) {
       console.log(e)
     }
   }
-
 }
 
 export default LoginForm;
