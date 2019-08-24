@@ -16,7 +16,7 @@
 
 ## Providers
 
-- [Authereum](https://authereum.org/) - [Qmcbwok9ch62GPivNP7tkaZtdAG7hTgtxDTzrvY3JovDMh](https://cloudflare-ipfs.com/ipfs/Qmcbwok9ch62GPivNP7tkaZtdAG7hTgtxDTzrvY3JovDMh)
+- [Authereum](https://authereum.org/) - [QmZwZypgkhZbVzMcBUm49vMgt3oEnwXnTvqnhM3AqwVW56](https://cloudflare-ipfs.com/ipfs/QmZwZypgkhZbVzMcBUm49vMgt3oEnwXnTvqnhM3AqwVW56)
 - [Portis](https://www.portis.io/) - [QmTSTRWp1WDkpcpByoTzPBQd6HR1Pjuyt8tErMyiAZTQmL](https://cloudflare-ipfs.com/ipfs/QmTSTRWp1WDkpcpByoTzPBQd6HR1Pjuyt8tErMyiAZTQmL)
 - [Ledger](https://www.ledger.com) - [QmSwKmxaVQ4hfHeRq3fjkWAnnC79DBCuU8qy5cx5qQUVQQ](https://cloudflare-ipfs.com/ipfs/QmSwKmxaVQ4hfHeRq3fjkWAnnC79DBCuU8qy5cx5qQUVQQ)
 - [MetaMask](https://metamask.io/QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q) - [QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q](https://cloudflare-ipfs.com/ipfs/QmeSCFoc2WchGu65y9dj5vhwqZmMLKuryg2m8cJ5b6994Q)
