@@ -8,6 +8,8 @@ const network = process.env.REACT_APP_NETWORK
 let enabled = false
 
 const checkWeb3 = () => {
+  console.log('window.ethereum: ', window.ethereum)
+  console.log('window.ethereum.isEnsLogin: ', window.ethereum.isEnsLogin)
   if (window.ethereum && window.ethereum.isEnsLogin) {
     // NOTE: set timeout to override MetaMask
     setTimeout(() => {
@@ -41,11 +43,12 @@ const injectWeb3 = async () => {
     }
   }
 
-  const provider = await ensLoginSdk.connect('authereum.wallets.eth', ensLoginConfig)
+  const provider = await ensLoginSdk.connect('metamask.wallets.eth', ensLoginConfig)
   console.log('Set provider: ', provider)
   win.web3 = new Web3(provider)
   win.Web3 = Web3
   win.ethereum = provider
+  win.ethereum.isEnsLogin = true
 
   win.ethereum.isConnected = () => {
     console.log('isConnected: ', enabled)
