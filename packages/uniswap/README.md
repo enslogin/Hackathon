@@ -2,7 +2,7 @@
 
 ---
 
-## Note: This is a fork of the Uniswap frontend, hosted by Authereum and running on the Kovan Network. The ETH and tokens traded on this site have no value.
+## Note: This is a fork of the Uniswap frontend. The ETH and tokens traded on this site have no value.
 
 ---
 
