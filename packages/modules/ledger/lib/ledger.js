@@ -1,6 +1,5 @@
 const { ethers }              = require("ethers");
 const regeneratorRuntime      = require("regenerator-runtime");
-const Web3                    = require("web3");
 const createLedgerSubprovider = require("@ledgerhq/web3-subprovider").default;
 const TransportU2F            = require("@ledgerhq/hw-transport-u2f").default;
 const ProviderEngine          = require("web3-provider-engine");

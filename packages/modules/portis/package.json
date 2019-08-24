@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "author": "hadrien croubois",
   "scripts": {
-    "build": "browserify lib/portis.js -o build/portis.js"
+    "build": "browserify lib/portis.js | minify --js > build/portis.js"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@portis/web3": "^2.0.0-beta.38"
+  }
 }

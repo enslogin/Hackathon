@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "author": "hadrien croubois",
   "scripts": {
-    "build": "browserify lib/ledger.js -o build/ledger.js"
+    "build": "browserify lib/ledger.js | minify --js > build/ledger.js"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@ledgerhq/hw-transport-u2f": "^4.68.4",
+    "@ledgerhq/web3-subprovider": "^4.68.4",
+    "ethers": "^4.0.36",
+    "regenerator-runtime": "^0.13.3",
+    "web3-provider-engine": "^15.0.3"
+  }
 }
