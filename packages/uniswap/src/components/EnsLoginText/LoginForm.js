@@ -2,11 +2,17 @@ import React from 'react';
 import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 import Web3 from 'web3'
+import Button from '@material-ui/core/Button';
 
 import Account from './Account'
 import { Input } from '@material-ui/core';
 
 const ensLogin = require("ens-login-sdk");
+
+const StyledInput = styled(Input)`
+  margin-right: 20px;
+  width: 200px;
+`;
 
 const UI = {
   Container: styled.div`
@@ -16,15 +22,55 @@ const UI = {
     width: 100%;
     padding: 1em;
   `,
-  FormContainer: styled.div`
-    height: 3.5em;
-    margin-bottom: 0.5em;
+  FormContainer: styled.form`
+    position: relative;
+    top: 7px;
+    left: 9px;
+  `,
+  AccountModal: styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    justify-content: center;
+  `,
+  ImageContainer: styled.div`
+    display: flex;
+    flex-direction: row;
+  `,
+  MainContainer: styled.div`
+    display: flex;
+  `,
+  AccountSections: styled.div`
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2px;
+  `,
+  StyledEns: styled.img`
+    width: 25px;
+  `,
+  StyledIcon: styled.img`
+    width: 45px;
+    height: 45px;
+    align-self: center;
+    margin-bottom: -20px;
+    position: relative;
+    top: -11px;
+    left: 8px;
+  `,
+  StyledButton: styled.div`
+    margin: 5px 15px 0 0;
   `
-}
+ }
 
-const StyledInput = styled(Input)`
-  margin-right: 20px;
+const StyledButton = styled(Button)`
+  border-radius: 2px;
+  border-style: solid;
+  border-color: #4F7CE8;
+  color: white;
+  height: 32px;
+  box-shadow: 0 3px 5px 2px #4F7CE8;
 `;
+
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -79,7 +125,73 @@ export class LoginForm extends React.Component {
     })
   }
 
+  renderAccount() {
+    return (
+      <Account web3={this.state.web3} account={this.state.account} /> 
+    )
+  }
+
+  renderForm() {
+    return (
+      <UI.FormContainer>
+        <form
+          className="form"
+          onSubmit={this.handleSubmit}>
+              <StyledInput
+                type="text"
+                value={this.state.ensName}
+                placeholder="ENS Name"
+                onChange={this.handleInputChange}
+                className="form-control"
+                />
+
+              {/* <input
+                type="text"
+                value={this.state.ensName}
+                placeholder="ENS Name"
+                onChange={this.handleInputChange}
+                className="form-control"
+              /> */}
+        </form>
+      </UI.FormContainer>
+    )
+  }
+
+  renderContents() {
+    if (this.state.isCurrentProvider) {
+      return this.renderAccount()
+    } else {
+      return this.renderForm()
+    }
+  }
+
   render() {
+    const cachedEnsName = window.sessionStorage.getItem('cachedEnsName')
+    const isLoggedIn = this.state.isCurrentProvider
+    return (
+      <UI.Container>
+        { isLoggedIn ? (
+            <UI.StyledButton>
+              <StyledButton onClick={this.handleLogout}>Log Out</StyledButton>
+            </UI.StyledButton>
+          ) : (
+            null
+          )
+        }
+        <UI.ImageContainer>
+          <UI.StyledEns src="../left.png" alt="Left" />
+            {this.renderContents()}
+          <UI.StyledEns src="../right.png" alt="Right" />
+        </UI.ImageContainer>
+        { cachedEnsName ? (
+            <UI.StyledIcon src="../authereum.png" alt="Authereum" />
+          ) : (
+            null
+          )
+        }
+      </UI.Container>
+    )
+
     return (
       <UI.Container>
         <UI.FormContainer>
@@ -111,6 +223,10 @@ export class LoginForm extends React.Component {
         </UI.FormContainer>
       </UI.Container>
     );
+  }
+
+  handleLogout= () => {
+    return this.logout()
   }
 
   handleInputChange = async (event) => {
