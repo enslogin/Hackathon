@@ -1,6 +1,6 @@
 import localforage from 'localforage';
 
-const IDENTITY_KEY = 'uuap-iexec';
+const IDENTITY_KEY = 'enslogin-minimap';
 
 class StorageService
 {

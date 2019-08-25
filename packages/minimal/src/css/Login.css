@@ -1,6 +1,6 @@
 #login
 {
-	background-color: #23272b;
+	/* background-color: #23272b; */
 	text-align:       center;
 	min-height:       100vh;
 	min-width:        100vw;
@@ -43,7 +43,7 @@
 
 #login .form-control:focus
 {
-	color: #ffffff;
+	color: #8596af;
 }
 
 #login input

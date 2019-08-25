@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import ensLoginSdk from 'ens-login-sdk';
 
 import {
 	MDBInput,
@@ -8,7 +7,6 @@ import {
 
 import logo from '../assets/logo.png';
 import "../css/Login.css";
-
 
 class Login extends Component
 {
@@ -29,10 +27,7 @@ class Login extends Component
 
 	async update(event)
 	{
-		const username = event.target.value;
-		ensLoginSdk.connect(username, this.props.services.config)
-		.then(provider => { this.props.services.connect(provider, username); })
-		.catch(e => {})
+		this.props.services.tryConnect(event.target.value);
 	}
 
 	render()
