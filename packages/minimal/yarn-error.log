@@ -1,0 +1,89 @@
+Arguments: 
+  /home/amxx/.nvm/versions/node/v11.12.0/bin/node /home/amxx/.nvm/versions/node/v11.12.0/bin/yarn
+
+PATH: 
+  /home/amxx/.nvm/versions/node/v11.12.0/bin:/home/amxx/Code/Scripts:/usr/local/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
+
+Yarn version: 
+  1.17.3
+
+Node version: 
+  11.12.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/ens-login-sdk: Not found
+      at Request.params.callback [as _callback] (/home/amxx/.nvm/versions/node/v11.12.0/lib/node_modules/yarn/lib/cli.js:66830:18)
+      at Request.self.callback (/home/amxx/.nvm/versions/node/v11.12.0/lib/node_modules/yarn/lib/cli.js:140464:22)
+      at Request.emit (events.js:197:13)
+      at Request.<anonymous> (/home/amxx/.nvm/versions/node/v11.12.0/lib/node_modules/yarn/lib/cli.js:141436:10)
+      at Request.emit (events.js:197:13)
+      at IncomingMessage.<anonymous> (/home/amxx/.nvm/versions/node/v11.12.0/lib/node_modules/yarn/lib/cli.js:141358:12)
+      at Object.onceWrapper (events.js:285:20)
+      at IncomingMessage.emit (events.js:202:15)
+      at endReadableNT (_stream_readable.js:1132:12)
+      at processTicksAndRejections (internal/process/next_tick.js:76:17)
+
+npm manifest: 
+  {
+  	"name": "iexec-doracle-lottery",
+  	"version": "0.0.1",
+  	"description": "",
+  	"repository": {
+  		"type": "git",
+  		"url": "git+https://github.com/iExecBlockchainComputing/iexec-doracle-lottery.git"
+  	},
+  	"bugs": {
+  		"url": "https://github.com/iExecBlockchainComputing/iexec-doracle-lottery.git/issues"
+  	},
+  	"author": "iExec",
+  	"license": "ISC",
+  	"homepage": ".",
+  	"dependencies": {
+  		"@fortawesome/fontawesome-svg-core": "^1.2.15",
+  		"@fortawesome/free-solid-svg-icons": "^5.7.2",
+  		"@fortawesome/react-fontawesome": "^0.1.4",
+  		"bootstrap": "^4.3.1",
+  		"ens-login-sdk": "1.0.0",
+  		"ethers": "^4.0.33",
+  		"fbemitter": "^2.1.1",
+  		"jquery": "^3.4.1",
+  		"localforage": "^1.7.3",
+  		"mdbreact": "^4.11.0",
+  		"node-notifier": "^5.4.0",
+  		"react": "^16.8.6",
+  		"react-bootstrap": "^1.0.0-beta.10",
+  		"react-cookie": "^4.0.1",
+  		"react-dom": "^16.8.6",
+  		"react-fontawesome": "^1.6.1",
+  		"react-notifications": "^1.4.3",
+  		"react-router-dom": "^5.0.1",
+  		"react-scripts": "^3.0.1",
+  		"react-toastify": "^5.3.2",
+      "web3": "^1.2.1"
+  	},
+  	"scripts": {
+  		"truffle:build": "truffle compile",
+  		"react:start":   "react-scripts start",
+  		"react:build":   "react-scripts build",
+  		"react:test":    "react-scripts test",
+  		"react:eject":   "react-scripts eject"
+  	},
+  	"eslintConfig": {
+  		"extends": "react-app"
+  	},
+  	"browserslist": [
+  		">0.2%",
+  		"not dead",
+  		"not ie <= 11",
+  		"not op_mini all"
+  	]
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

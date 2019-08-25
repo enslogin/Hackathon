@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
 	"scripts": {
-		"build:bundle": "browserify -r ./lib/enslogin.js -o public/js/bundle.js"
+		"build:bundle": "browserify -r ./lib/enslogin.js | minify --js > public/js/bundle.js"
   },
   "main": "lib/enslogin.js",
   "dependencies": {

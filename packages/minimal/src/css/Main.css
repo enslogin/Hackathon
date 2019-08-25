@@ -1,0 +1,18 @@
+#main
+{
+	/* background-color: #23272b; */
+	text-align:       center;
+	min-height:       100vh;
+	min-width:        100vw;
+}
+
+#main .container
+{
+	padding:   20px;
+	max-width: 60vw;
+}
+
+#main .container .card:not(:first-of-type)
+{
+	margin-top: 20px;
+}

@@ -1,0 +1,87 @@
+#login
+{
+	background-color: #23272b;
+	text-align:       center;
+	min-height:       100vh;
+	min-width:        100vw;
+}
+
+#login .login-card
+{
+	position:  fixed;
+	top:       50%;
+	left:      50%;
+	height:    30vw;
+	width:     40vw;
+	max-width: 600px;
+	transform: translate(-50%,-50%);
+}
+
+#login .login-card > *
+{
+	transform: none;
+}
+
+#login .login-header
+{
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+}
+
+#login .logo
+{
+	height: 120px;
+}
+
+#login .title
+{
+	color: #8596af;
+	font-size: 2.5em;
+	font-weight: 700;
+}
+
+#login .form-control:focus
+{
+	color: #ffffff;
+}
+
+#login input
+{
+	flex: 1;
+	padding: 12px;
+}
+
+#login ul
+{
+	list-style:       none;
+	overflow:         hidden;
+	background-color: rgba(255,255,255,.95);
+	border-radius:    3px;
+	padding:          0;
+	margin:           10px 0;
+}
+#login li
+{
+	text-align:  left;
+	padding:     10px 20px;
+	cursor:      pointer;
+}
+#login li.connection::after
+{
+	font-weight: bold;
+	text-align:  right;
+	float:       right;
+	content:     "Connect";
+}
+#login li.creation::after
+{
+	font-weight: bold;
+	text-align:  right;
+	float:       right;
+	content:     "Create";
+}
+#login li:hover
+{
+	background-color: #F3E5AB;
+}
