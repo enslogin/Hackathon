@@ -18,7 +18,7 @@ class Root extends Component
 
 	componentDidMount()
 	{
-		this.subscription = this.props.services.emitter.addListener('updateView', this.updateView.bind(this));
+		this.subscription = this.props.services.emitter.addListener('setView', this.setView.bind(this));
 	}
 
 	componentWillUnmount()
@@ -26,9 +26,9 @@ class Root extends Component
 		this.subscription.remove();
 	}
 
-	updateView()
+	setView(view)
 	{
-		this.setState({ view: this.props.services.provider === null ? 'Login' : 'Main' });
+		this.setState({ view });
 		scrollTo(0, 0);
 	}
 
@@ -39,7 +39,9 @@ class Root extends Component
 			<>
 			<Notifications emitter={this.props.services.emitter}/>
 			{
-			  (this.state.view === 'Login')
+			  (this.state.view === 'Loading')
+			? <Loading/>
+			: (this.state.view === 'Login')
 			? <Login services={this.props.services}/>
 			: (this.state.view === 'Main')
 			? <Main services={this.props.services}/>

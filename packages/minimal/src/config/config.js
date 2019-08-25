@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+module.exports = {
 	provider:
 	{
 		appId:   null,
@@ -11,4 +11,4 @@ module.exports = Object.freeze({
 		port: 5001,
 		protocol: 'https',
 	},
-});
+};

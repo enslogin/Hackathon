@@ -15,6 +15,11 @@ class Services
 
 	start()
 	{
+		this.config.__calbacks = {
+			loadStart: () => {
+				this.emitter.emit('setView', 'Loading');
+			}
+		};
 	}
 
 	stop()
@@ -34,7 +39,7 @@ class Services
 		finally
 		{
 			if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
-			this.emitter.emit("updateView");
+			this.emitter.emit('setView', 'Main');
 		}
 	}
 
@@ -43,7 +48,7 @@ class Services
 		this.provider = null;
 		this.web3     = null;
 		this.emitter.emit("Notify", "warning", `Disconnected`)
-		this.emitter.emit("updateView");
+		this.emitter.emit('setView', 'Login');
 	}
 
 }
