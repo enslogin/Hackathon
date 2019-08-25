@@ -43,12 +43,19 @@ class Services
 			try
 			{
 				this.provider.enable()
-				.then(() => this.connected(username))
-				.catch(() => console.error("connection refused"));
+				.then(() => {
+					if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
+					this.emitter.emit('setView', 'Main');
+				})
+				.catch(() => {
+					this.emitter.emit("Notify", "error", "Connection refused")
+					this.emitter.emit('setView', 'Login');
+				});
 			}
 			catch (e)
 			{
-				this.connected(username);
+				if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
+				this.emitter.emit('setView', 'Main');
 			}
 		})
 		.catch(e => {
@@ -56,11 +63,7 @@ class Services
 		})
 	}
 
-	connected(username)
-	{
-		if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
-		this.emitter.emit('setView', 'Main');
-	}
+
 
 	disconnect()
 	{
