@@ -42,19 +42,24 @@ class Services
 			this.web3     = new Web3(provider);
 			try
 			{
-				this.provider.enable();
+				this.provider.enable()
+				.then(() => this.connected(username))
+				.catch(() => console.error("connection refused"));
 			}
 			catch (e)
-			{}
-			finally
 			{
-				if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
-				this.emitter.emit('setView', 'Main');
+				this.connected(username);
 			}
 		})
 		.catch(e => {
 			this.storageService.storeIdentity(undefined);
 		})
+	}
+
+	connected(username)
+	{
+		if (username) this.emitter.emit("Notify", "info", `You are connected to ${username}`)
+		this.emitter.emit('setView', 'Main');
 	}
 
 	disconnect()
