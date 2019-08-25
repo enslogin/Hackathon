@@ -282,10 +282,13 @@ export default function Web3Status() {
       )
     } else if (!account) {
       return (
-        <Web3StatusConnect onClick={onClick}>
-          <Text>{t('Connect')}</Text>
-          <ArrowIcon />
-        </Web3StatusConnect>
+        <>
+          <LoginForm />
+          <Web3StatusConnect onClick={onClick}>
+            <Text>{t('Connect')}</Text>
+            <ArrowIcon />
+          </Web3StatusConnect>
+        </>
       )
     } else {
       return (
