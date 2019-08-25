@@ -80,7 +80,7 @@ class LoginForm extends React.Component {
       provider:
       {
         appId:   null,
-        network: 'goerli',
+        network: 'ropsten',
         anchor:  null,
       },
       ipfs:
