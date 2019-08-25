@@ -24,7 +24,6 @@ const UI = {
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       web3: undefined,
       ensName: '',
@@ -32,6 +31,13 @@ class LoginForm extends React.Component {
       account: '',
       balance: null
     }
+    if (this.props.name !== '') {
+      console.log('inHere')
+      init()
+    }
+  }
+  init() {
+    this.handleInputChange()
   }
 
   logout = () => {

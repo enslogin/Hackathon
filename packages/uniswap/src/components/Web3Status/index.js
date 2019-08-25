@@ -42,6 +42,10 @@ const LogoutText = styled.div`
   padding-top: 5px;
   font-size: 0.4rem;
 `
+const LoginColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 const Web3StatusError = styled(Web3StatusGeneric)`
   background-color: ${({ theme }) => theme.salmonRed};
@@ -258,7 +262,8 @@ export default function Web3Status() {
 
   function handleLogout() {
     // TODO: handle ENS Login logout
-    window.ethereum.authereum.logout()
+    console.log(window.ethereum)
+    window.ethereum.logout()
   }
 
   const ref = useRef()
@@ -282,18 +287,22 @@ export default function Web3Status() {
       )
     } else if (!account) {
       return (
-        <>
+        <LoginColumn>
           <LoginForm />
-          <Web3StatusConnect onClick={onClick}>
+          <Web3StatusConnect style={{height: '25px', width: '100px', marginTop: "-40px", marginLeft: "90px"}} onClick={onClick}>
             <Text>{t('Connect')}</Text>
-            <ArrowIcon />
+            {/* <ArrowIcon /> */}
           </Web3StatusConnect>
-        </>
+        </LoginColumn>
       )
     } else {
       return (
         <ConnectContainer>
-          <LoginForm />
+          <LoginForm name={'authereum.eth'} />
+          <Web3StatusConnect style={{height: '25px', width: '100px', marginTop: "-40px", marginLeft: "90px"}} onClick={handleLogout}></Web3StatusConnect>
+            <Text>{t('Logout')}</Text>
+            {/* <ArrowIcon />
+          </Web3StatusConnect>
           {/* <Web3StatusConnected onClick={onClick} pending={hasPendingTransactions}>
             {hasPendingTransactions && <SpinnerWrapper src={Circle} alt="loader" />}
             <Text>{ENSName || shortenAddress(account)}</Text>

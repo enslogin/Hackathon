@@ -112,8 +112,8 @@ export class LoginForm extends React.Component {
       },
     }
     try {
-      let web3 = new Web3(window.web3.currentProvider)
-      // let web3 = new Web3(await ensLogin.connect(this.state.ensName, config))
+      // let web3 = new Web3(window.web3.currentProvider)
+      let web3 = new Web3(await ensLogin.connect(this.state.ensName, config))
 
       this.setState({ web3 })
 

@@ -16,13 +16,13 @@ const BAD_IMAGES = {}
 
 // TODO: find real icons
 const kovanIcons = {
-  '0xac94ea989f6955c67200dd67f0101e1865a560ea': MKR,
-  '0xf8720eb6ad4a530cccb696043a0d10831e2ff60e': CVC,
-  '0x4bb57bc8485ec4c4112aa25da4e746f373ad540e': GNT,
+  // '0xac94ea989f6955c67200dd67f0101e1865a560ea': MKR,
+  // '0xf8720eb6ad4a530cccb696043a0d10831e2ff60e': CVC,
+  // '0x4bb57bc8485ec4c4112aa25da4e746f373ad540e': GNT,
   // '0x3fa9fcd9456991fe1220d1bb77a5863695c01c05': OMG,
   // '0x4c7493b70f16bec1e087bf74a31d095f9b8f9c40': REP,
-  '0xc4375b7de8af5a38a93548eb8453a498222c4ff2': DAI,
-  '0x02f96ef85cad6639500ca1cc8356f0b5ca5bf1d2': BAT
+  // '0xc4375b7de8af5a38a93548eb8453a498222c4ff2': DAI,
+  '0x583cbBb8a8443B38aBcC0c956beCe47340ea1367': BAT
 }
 
 const Image = styled.img`
@@ -48,9 +48,10 @@ export default function TokenLogo({ address, size = '1rem', ...rest }) {
   if (address === 'ETH') {
     return <StyledEthereumLogo size={size} />
   } else if (!error && !BAD_IMAGES[address]) {
-    console.log('in')
+    console.log('TOKENS = in here')
     path = kovanIcons[address]
   } else {
+    console.log('TOKENS = in there')
     return (
       <Emoji {...rest}>
         <span role="img" aria-label="Thinking">
