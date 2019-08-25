@@ -29,21 +29,39 @@ const ETH = {
 
 const INITIAL_TOKENS_CONTEXT = {
   3: {
-    '0x9c83dCE8CA20E9aAF9D3efc003b2ea62aBC08351': {
-      [NAME]: 'Bee Token',
-      [SYMBOL]: 'BEE',
+    // '0xac94ea989f6955c67200dd67f0101e1865a560ea': {
+    //   [NAME]: 'Maker',
+    //   [SYMBOL]: 'MKR',
+    //   [DECIMALS]: 18,
+    //   [EXCHANGE_ADDRESS]: '0xc64f00b099649d578bf289894d3a51ee7d0b04e5'
+    // },
+    // '0xc4375b7de8af5a38a93548eb8453a498222c4ff2': {
+    //   [NAME]: 'Dai Stablecoin v1.0',
+    //   [SYMBOL]: 'DAI',
+    //   [DECIMALS]: 18,
+    //   [EXCHANGE_ADDRESS]: '0x47d4af3bbaec0de4dba5f44ae8ed2761977d32d6'
+    // },
+    '0x4E470dc7321E84CA96FcAEDD0C8aBCebbAEB68C6': {
+      [NAME]: 'Maker',
+      [SYMBOL]: 'MKR',
       [DECIMALS]: 18,
-      [EXCHANGE_ADDRESS]: '0x2ffec954af5432c13c31c24d662c8f049989dc7c'
+      [EXCHANGE_ADDRESS]: '0x7f08E325bA135D59801e5F62a79E8704cfc7D22d'
     },
-    '0x2FFeC954af5432C13c31c24d662C8F049989DC7C': {
-      [NAME]: 'Bee Token',
-      [SYMBOL]: 'BEE',
+    '0xaD6D458402F60fD3Bd25163575031ACDce07538D': {
+      [NAME]: 'Dai Stablecoin v1.0',
+      [SYMBOL]: 'DAI',
       [DECIMALS]: 18,
-      [EXCHANGE_ADDRESS]: '0x12636d998c39800c3729c989f119c1cde3f051e1'
+      [EXCHANGE_ADDRESS]: '0x96820573a1d8a7fD1B3725DdbBc8A04E6f1A75C3'
+    },
+    '0xDb0040451F373949A4Be60dcd7b6B8D6E42658B6': {
+      [NAME]: 'Basic Attention Token',
+      [SYMBOL]: 'BAT',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0x148278cEa717e9612CC09A4dB2eB7d952002EbB3'
     },
   },
   4: {
-    '0xac94ea989f6955c67200dd67f0101e1865a560ea': {
+    '0x06732516ACd125B6e83c127752ed5F027e1b276E': {
       [NAME]: 'Maker',
       [SYMBOL]: 'MKR',
       [DECIMALS]: 18,
