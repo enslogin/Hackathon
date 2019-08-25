@@ -7,99 +7,6 @@ const { Connector, ErrorCodeMixin } = Connectors
 const network = process.env.REACT_APP_NETWORK
 let enabled = false
 
-const checkWeb3 = () => {
-  console.log('window.ethereum: ', window.ethereum)
-  console.log('window.ethereum.isEnsLogin: ', window.ethereum.isEnsLogin)
-  if (window.ethereum && window.ethereum.isEnsLogin) {
-    // NOTE: set timeout to override MetaMask
-    setTimeout(() => {
-      clearInterval(interval)
-    }, 1e2)
-  } else {
-    // NOTE: temp fix to prevent redirect on mobile upon first load
-    setTimeout(() => {
-      enabled = true
-    }, 2e3)
-
-    injectWeb3()
-
-    window.ethereum.enable()
-  }
-}
-
-const injectWeb3 = async () => {
-  console.log('injectWeb3')
-  const win = window
-
-  if (win.web3 && win.web3.currentProvider &&
-  typeof win.web3.currentProvider.stop === 'function') {
-    // NOTE: this stops previous listeners when overriding the web3 global
-    console.log('stop listeners')
-    win.web3.currentProvider.stop()
-  }
-
-  const ensLoginConfig = {
-    provider: {
-      network: 'ropsten'
-    }
-  }
-
-  console.log('setting provider')
-  const provider = await ensLoginSdk.connect('authereum.eth', ensLoginConfig)
-  console.log('Set provider: ', provider)
-  win.web3 = new Web3(provider)
-  win.Web3 = Web3
-  win.ethereum = provider
-  win.ethereum.isEnsLogin = true
-
-  win.ethereum.isConnected = () => {
-    console.log('isConnected: ', enabled)
-    return enabled
-  }
-
-  win.ethereum.logout = async () => {
-    console.error('Logout not implemented')
-    return false
-  }
-
-  win.ethereum._metamask = {}
-  win.ethereum._metamask.isUnlocked = async () => {
-    console.log('_metamask.isUnlocked: ', enabled)
-    return enabled
-  }
-
-  win.ethereum._metamask.isEnabled = () => {
-    console.log('_metamask.isEnabled: ', enabled)
-    return enabled
-  }
-
-  win.ethereum._metamask.isApproved = async () => {
-    console.log('_metamask.isApproved: ', enabled)
-    return enabled
-  }
-}
-
-// const checkWeb3 = () => {
-//   if (window.ethereum) {
-//     // NOTE: set timeout to override MetaMask
-//     setTimeout(() => {
-//       clearInterval(interval)
-//     }, 1e2)
-//   } else {
-//     // NOTE: temp fix to prevent redirect on mobile upon first load
-//     setTimeout(() => {
-//       enabled = true
-//     }, 2e3)
-
-//     injectWeb3(network, false)
-
-//     window.ethereum.enable()
-//   }
-// }
-
-let interval = setInterval(() => checkWeb3(), 1e4)
-checkWeb3()
-
 const InjectedConnectorErrorCodes = ['ETHEREUM_ACCESS_DENIED', 'NO_WEB3', 'UNLOCK_REQUIRED']
 export default class InjectedConnector extends ErrorCodeMixin(Connector, InjectedConnectorErrorCodes) {
   constructor(args = {}) {
@@ -114,37 +21,21 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
     if (ethereum && ethereum.isMetaMask) {
       ethereum.autoRefreshOnNetworkChange = false
     }
+    this.initProvider()
+  }
+
+  async initProvider() {
+    const ensLoginConfig = {
+      provider: {
+        network: 'ropsten'
+      }
+    }
+
+    this.provider = await ensLoginSdk.connect('authereum.enslogin.eth', ensLoginConfig)
   }
 
   async onActivation() {
-    const { ethereum, web3 } = window
-
-    if (ethereum && enabled) {
-      await ethereum.enable().catch(error => {
-        const deniedAccessError = Error(error)
-        deniedAccessError.code = InjectedConnector.errorCodes.ETHEREUM_ACCESS_DENIED
-        throw deniedAccessError
-      })
-
-      // initialize event listeners
-      if (ethereum.on) {
-        ethereum.on('networkChanged', this.networkChangedHandler)
-        ethereum.on('accountsChanged', this.accountsChangedHandler)
-
-        this.runOnDeactivation.push(() => {
-          if (ethereum.removeListener) {
-            ethereum.removeListener('networkChanged', this.networkChangedHandler)
-            ethereum.removeListener('accountsChanged', this.accountsChangedHandler)
-          }
-        })
-      }
-    } else if (web3) {
-      console.warn('Your web3 provider is outdated, please upgrade to a modern provider.')
-    } else {
-      const noWeb3Error = Error('Your browser is not equipped with web3 capabilities.')
-      noWeb3Error.code = InjectedConnector.errorCodes.NO_WEB3
-      throw noWeb3Error
-    }
+    this.provider.enable()
   }
 
   async getAccount(provider) {
@@ -157,10 +48,6 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
     }
 
     return account
-  }
-
-  async getProvider() {
-    return window.ethereum
   }
 
   onDeactivation() {
@@ -198,6 +85,6 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
   }
 
   async getProvider(networkId) {
-    return window.ethereum
+    return this.provider
   }
 }
