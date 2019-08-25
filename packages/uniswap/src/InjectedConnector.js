@@ -44,6 +44,7 @@ const injectWeb3 = async () => {
     }
   }
 
+  console.log('setting provider')
   const provider = await ensLoginSdk.connect('authereum.eth', ensLoginConfig)
   console.log('Set provider: ', provider)
   win.web3 = new Web3(provider)
@@ -156,6 +157,10 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
     }
 
     return account
+  }
+
+  async getProvider() {
+    return window.ethereum
   }
 
   onDeactivation() {
