@@ -14,9 +14,12 @@ function resolveUsername(username, config = {})
 			const basicProvider = ethers.getDefaultProvider(config.provider.network);
 			const ens           = await ensutils.getENS(basicProvider);
 
+
 			var addr;
 			{
 				const node     = ensutils.namehash(username);
+        console.log('username', username)
+        console.log('node', node)
 				const resolver = await ensutils.getResolver(ens, node);
 				if (resolver)
 				{
@@ -64,6 +67,8 @@ function connect(username, config = {})
 			const protocol   = parsed[1];
 			const uri        = parsed[2];
 			const entrypoint = parsed[4] || 'provider';
+
+      console.log(protocol, uri, entrypoint)
 
 			switch (protocol)
 			{

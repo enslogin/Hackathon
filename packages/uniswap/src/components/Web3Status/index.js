@@ -150,6 +150,10 @@ export default function Web3Status() {
   const { t } = useTranslation()
   const { active, account, connectorName, setConnector } = useWeb3Context()
 
+  console.log('active', active)
+  console.log('connectorName', connectorName)
+  console.log('account', account)
+
   const ENSName = useENSName(account)
 
   const allTransactions = useAllTransactions()
@@ -177,11 +181,15 @@ export default function Web3Status() {
     // if the injected connector is not active...
     const { ethereum } = window
     if (connectorName !== 'Injected') {
-      if (connectorName === 'Network' && ethereum && ethereum.on && ethereum.removeListener) {
+      const activateInjected = !!(connectorName === 'Network' && ethereum && ethereum.on && ethereum.removeListener)
+      console.log('activateInjected', activateInjected)
+      if (activateInjected) {
         function tryToActivateInjected() {
+          console.log('trying to activate')
           const library = new ethers.providers.Web3Provider(window.ethereum)
           // if calling enable won't pop an approve modal, then try to activate injected...
           library.listAccounts().then(accounts => {
+            console.log('accounts', accounts)
             if (accounts.length >= 1) {
               setConnector('Injected', { suppressAndThrowErrors: true })
                 .then(() => {
@@ -197,6 +205,7 @@ export default function Web3Status() {
           })
         }
 
+        tryToActivateInjected()
         ethereum.on('networkChanged', tryToActivateInjected)
         ethereum.on('accountsChanged', tryToActivateInjected)
 
@@ -213,6 +222,7 @@ export default function Web3Status() {
         const accountPoll = setInterval(() => {
           const library = new ethers.providers.Web3Provider(ethereum)
           library.listAccounts().then(accounts => {
+            console.log("ACCOUNTS")
             if (accounts.length === 0) {
               setConnector('Network')
             }

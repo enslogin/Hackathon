@@ -196,4 +196,8 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
       })
     }
   }
+
+  async getProvider(networkId) {
+    return window.ethereum
+  }
 }

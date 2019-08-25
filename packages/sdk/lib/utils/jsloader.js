@@ -16,6 +16,7 @@ class fromIPFS
 				files
 				.filter(file => file.content !== undefined)
 				.forEach(file => {
+          console.log(file.content.toString('utf8'))
 					vm.runInThisContext(
 						file.content.toString('utf8'),
 						{ filename: file.name }
