@@ -300,10 +300,10 @@ export default function Web3Status() {
       return (
         <>
           <LoginForm provider={provider} providerCallback={providerCallback}/>
-          <Web3StatusConnect onClick={onClick}>
+          {/* <Web3StatusConnect onClick={onClick}>
             <Text>{t('Connect')}</Text>
             <ArrowIcon />
-          </Web3StatusConnect>
+          </Web3StatusConnect> */}
         </>
       )
     } else {
