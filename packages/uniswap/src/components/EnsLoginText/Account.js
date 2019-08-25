@@ -70,9 +70,17 @@ class Account extends React.Component {
             <UI.AccountModal>
               <UI.AccountSections>
                 {console.log("eth")}
-                <a href={`https://ropsten.etherscan.io/address/${this.props.account}`}>
-                  {this.props.account.substring(0,5)}...
-                </a>
+                {this.props.account ?
+                  (
+                    <a href={`https://ropsten.etherscan.io/address/${this.props.account}`}>
+                      {this.props.account.substring(0,5)}...
+                    </a>
+                  ) : (
+                    <span>No account</span>
+                  )
+                
+                }
+                
               </UI.AccountSections>
               {/* <UI.AccountSections>
                 {this.props.balance} ETH
