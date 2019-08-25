@@ -2,14 +2,8 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import ensLoginSdk from 'ens-login-sdk';
 
-
 import {
 	MDBInput,
-	MDBBtn,
-	MDBIcon,
-	MDBModal,
-	MDBModalBody,
-	MDBModalHeader,
 } from 'mdbreact';
 
 import logo from '../assets/logo.png';
@@ -37,9 +31,7 @@ class Login extends Component
 	{
 		const username = event.target.value;
 		ensLoginSdk.connect(username, this.props.services.config)
-		.then(obj => {
-			this.props.services.connect(obj, username);
-		})
+		.then(provider => { this.props.services.connect(provider, username); })
 		.catch(e => {})
 	}
 

@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 
 import {
 	MDBCard,
-	MDBCardHeader,
 	MDBCardBody,
 	MDBBtn,
 	MDBIcon,
-	MDBInput
 } from 'mdbreact';
-
-import { ethers } from 'ethers';
 
 class LogoutCard extends Component
 {
@@ -26,7 +22,7 @@ class LogoutCard extends Component
 				<MDBCardBody>
 					<MDBBtn gradient="blue" className="m-3 py-2" onClick={this.logout.bind(this)}>
 						Logout
-						<MDBIcon icon="sync" className="ml-1" />
+						<MDBIcon icon="sign-out-alt" className="ml-1" />
 					</MDBBtn>
 				</MDBCardBody>
 			</MDBCard>

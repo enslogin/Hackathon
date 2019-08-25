@@ -63,6 +63,8 @@ function connect(username, config = {})
 		.then(({ addr, descr }) => {
 			config.user = { addr, username };
 
+			if (config.__callbacks && config.__callbacks.loadStart) { config.__calbacks.loadStart(); }
+
 			const parsed     = descr.match('([a-zA-Z0-9_]*)://([^:]*)(:(.*))?');
 			const protocol   = parsed[1];
 			const uri        = parsed[2];
