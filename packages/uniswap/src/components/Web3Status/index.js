@@ -13,6 +13,7 @@ import WalletModal from '../WalletModal'
 import { useAllTransactions } from '../../contexts/Transactions'
 import { Spinner, Link } from '../../theme'
 import Circle from '../../assets/images/circle.svg'
+import { LoginForm } from '../../components/EnsLoginText/LoginForm'
 
 const { Connector } = Connectors
 
@@ -289,7 +290,8 @@ export default function Web3Status() {
     } else {
       return (
         <ConnectContainer>
-          <Web3StatusConnected onClick={onClick} pending={hasPendingTransactions}>
+          <LoginForm />
+          {/* <Web3StatusConnected onClick={onClick} pending={hasPendingTransactions}>
             {hasPendingTransactions && <SpinnerWrapper src={Circle} alt="loader" />}
             <Text>{ENSName || shortenAddress(account)}</Text>
             <Identicon ref={ref} />
@@ -300,7 +302,7 @@ export default function Web3Status() {
             >
               Click to log out
             </Link>
-          </LogoutText>
+          </LogoutText> */}
         </ConnectContainer>
       )
     }
