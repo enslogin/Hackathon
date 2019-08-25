@@ -35,15 +35,20 @@ export class LoginForm extends React.Component {
       web3 = new Web3(this.props.provider)
     }
 
+    const cachedEnsName = window.sessionStorage.getItem('cachedEnsName')
+
     this.state = {
       web3: web3,
-      ensName: '',
+      ensName: cachedEnsName ? cachedEnsName : '',
       isCurrentProvider: !!this.props.provider,
       account: null
       // balance: null
     }
 
     this.fetchAccount()
+    if (cachedEnsName) {
+      this.handleAddressChangeDebounce()
+    }
   }
 
   async fetchAccount() {
@@ -153,7 +158,7 @@ export class LoginForm extends React.Component {
       let isProvider = await this.getProvider(this.state.web3)
       try {
         console.log('1', this.state.web3.eth)
-        await this.state.web3.currentProvider.enable().then(console.log).catch(console.error);
+        await this.state.web3.currentProvider.enable()//.then(console.log).catch(console.error);
         // let accounts = await this.state.web3.eth.getAccounts()
 
         let userAccount
