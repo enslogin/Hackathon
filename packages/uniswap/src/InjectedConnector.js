@@ -21,7 +21,8 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
     if (ethereum && ethereum.isMetaMask) {
       ethereum.autoRefreshOnNetworkChange = false
     }
-    this.initProvider()
+
+    // this.initProvider()
   }
 
   async initProvider() {
@@ -31,10 +32,12 @@ export default class InjectedConnector extends ErrorCodeMixin(Connector, Injecte
       }
     }
 
-    this.provider = await ensLoginSdk.connect('authereum.enslogin.eth', ensLoginConfig)
+    this.provider = await ensLoginSdk.connect('metamask.enslogin.eth', ensLoginConfig)
   }
 
   async onActivation() {
+    console.log('InjectedConnector onActivation')
+    this.provider = window.ensLoginProvider
     this.provider.enable()
   }
 

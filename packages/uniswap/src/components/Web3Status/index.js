@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from 'react'
+import React, { useReducer, useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { useTranslation } from 'react-i18next'
 import { useWeb3Context, Connectors } from 'web3-react'
@@ -177,17 +177,28 @@ export default function Web3Status() {
     dispatch({ type: WALLET_MODAL_CLOSE })
   }
 
+  const [provider, setProvider] = useState(null)
+
   // janky logic to detect log{ins,outs}...
   useEffect(() => {
     // if the injected connector is not active...
-    const { ethereum } = window
-    if (connectorName !== 'Injected') {
+    console.log('useEffect provider: ', provider)
+    
+    let ethereum = provider
+    
+    console.log('connectorName: ', connectorName)
+    console.log('ethereum: ', ethereum)
+    if (connectorName !== 'Injected' && ethereum) {
+      if (ethereum) {
+        console.log('ethereum.on: ', ethereum.on)
+        console.log('ethereum.removeListener: ', ethereum.removeListener)
+      }
       const activateInjected = !!(connectorName === 'Network' && ethereum && ethereum.on && ethereum.removeListener)
       console.log('activateInjected', activateInjected)
       if (activateInjected) {
         function tryToActivateInjected() {
           console.log('trying to activate')
-          const library = new ethers.providers.Web3Provider(window.ethereum)
+          const library = new ethers.providers.Web3Provider(ethereum)
           // if calling enable won't pop an approve modal, then try to activate injected...
           library.listAccounts().then(accounts => {
             console.log('accounts', accounts)
@@ -223,7 +234,6 @@ export default function Web3Status() {
         const accountPoll = setInterval(() => {
           const library = new ethers.providers.Web3Provider(ethereum)
           library.listAccounts().then(accounts => {
-            console.log("ACCOUNTS")
             if (accounts.length === 0) {
               setConnector('Network')
             }
@@ -235,7 +245,7 @@ export default function Web3Status() {
         }
       }
     }
-  }, [connectorName, setConnector])
+  }, [connectorName, setConnector, provider])
 
   function onClick() {
     if (walletModalError) {
@@ -254,6 +264,12 @@ export default function Web3Status() {
       console.log('3')
       openWalletModal()
     }
+  }
+
+  const providerCallback = (provider) => {
+    console.log('Bounce back')
+    console.log('provider: ', provider)
+    setProvider(provider)
   }
 
   function handleLogout() {
@@ -283,7 +299,7 @@ export default function Web3Status() {
     } else if (!account) {
       return (
         <>
-          <LoginForm />
+          <LoginForm provider={provider} providerCallback={providerCallback}/>
           <Web3StatusConnect onClick={onClick}>
             <Text>{t('Connect')}</Text>
             <ArrowIcon />
@@ -293,7 +309,7 @@ export default function Web3Status() {
     } else {
       return (
         <ConnectContainer>
-          <LoginForm />
+          <LoginForm provider={provider}/>
           {/* <Web3StatusConnected onClick={onClick} pending={hasPendingTransactions}>
             {hasPendingTransactions && <SpinnerWrapper src={Circle} alt="loader" />}
             <Text>{ENSName || shortenAddress(account)}</Text>

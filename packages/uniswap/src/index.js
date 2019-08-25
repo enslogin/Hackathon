@@ -50,6 +50,8 @@ function Updaters() {
   )
 }
 
+console.log('****** RERENDER *********')
+
 ReactDOM.render(
   <ThemeProvider>
     <>

@@ -28,6 +28,20 @@ const ETH = {
 }
 
 const INITIAL_TOKENS_CONTEXT = {
+  3: {
+    '0x9c83dCE8CA20E9aAF9D3efc003b2ea62aBC08351': {
+      [NAME]: 'Bee Token',
+      [SYMBOL]: 'BEE',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0x2ffec954af5432c13c31c24d662c8f049989dc7c'
+    },
+    '0x2FFeC954af5432C13c31c24d662C8F049989DC7C': {
+      [NAME]: 'Bee Token',
+      [SYMBOL]: 'BEE',
+      [DECIMALS]: 18,
+      [EXCHANGE_ADDRESS]: '0x12636d998c39800c3729c989f119c1cde3f051e1'
+    },
+  },
   4: {
     '0xac94ea989f6955c67200dd67f0101e1865a560ea': {
       [NAME]: 'Maker',

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import debounce from 'lodash/debounce'
 import Web3 from 'web3'
 
-import { useWeb3Context, Connectors } from 'web3-react'
 import Account from './Account'
 import { Input } from '@material-ui/core';
 
@@ -30,12 +29,39 @@ const StyledInput = styled(Input)`
 export class LoginForm extends React.Component {
   constructor(props) {
     super(props)
+
+    let web3
+    if (this.props.provider) {
+      web3 = new Web3(this.props.provider)
+    }
+
     this.state = {
-      web3: undefined,
+      web3: web3,
       ensName: '',
-      isCurrentProvider: false,
-      account: useWeb3Context.account
+      isCurrentProvider: !!this.props.provider,
+      account: null
       // balance: null
+    }
+
+    this.fetchAccount()
+  }
+
+  async fetchAccount() {
+    const web3 = this.state.web3
+
+    const callback = (err, accounts) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      this.setState({ account: accounts[0] })
+    }
+
+    if (web3) {
+      const accounts = await web3.eth.getAccounts(callback)
+      console.log('accounts: ', accounts)
+      if (!accounts) return
+      this.setState({ account: accounts[0] })
     }
   }
 
@@ -112,8 +138,15 @@ export class LoginForm extends React.Component {
       },
     }
     try {
-      let web3 = new Web3(window.web3.currentProvider)
-      // let web3 = new Web3(await ensLogin.connect(this.state.ensName, config))
+      const cachedEnsName = window.sessionStorage.getItem('cachedEnsName')
+      console.log('cachedEnsName: ', cachedEnsName)
+      const provider = await ensLogin.connect(this.state.ensName, config)
+      if (provider && this.state.ensName.includes('authereum')) {
+        window.sessionStorage.setItem('cachedEnsName', this.state.ensName)
+      }
+      const web3 = new Web3(provider)
+      window.ensLoginProvider = provider
+      this.props.providerCallback(provider)
 
       this.setState({ web3 })
 
@@ -157,7 +190,9 @@ export class LoginForm extends React.Component {
           isCurrentProvider: isProvider
         })
       } catch (e) {console.log("EEEE", e)}
-    } catch (err) {}
+    } catch (err) {
+      console.error('LoginForm Error: ', err)
+    }
   }, 250)
 
   handleSubmit = async (event) => {
