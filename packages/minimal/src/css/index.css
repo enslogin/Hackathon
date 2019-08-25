@@ -1,0 +1,40 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+code
+{
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.clickable
+{
+	cursor: pointer;
+}
+
+.overflow-ellipsis
+{
+	white-space:   pre;
+	overflow:      hidden;
+	text-overflow: ellipsis;
+}
+.overflow-hidden
+{
+	white-space:   pre;
+	overflow:      hidden;
+}
+.overflow-scrool
+{
+	display: block;
+	white-space: pre;
+	overflow: scroll;
+}
+.overflow-scrool::-webkit-scrollbar
+{
+	display: none;
+}

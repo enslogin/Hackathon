@@ -1,0 +1,22 @@
+#loading
+{
+	display:          flex;
+	position:         fixed;
+	height:           100vh;
+	width:            100vw;
+	background-color: #23272b;
+	align-items:      center;
+	justify-content:  center;
+	z-index:          999999;
+}
+#loading .path
+{
+	animation: spinner 1.5s infinite;
+}
+@keyframes spinner
+{
+	50%
+	{
+		stroke-dashoffset: 0;
+	}
+}
